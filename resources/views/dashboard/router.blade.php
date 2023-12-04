@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h4 class="m-0"><i class="fas fa-server"></i> <span class="font-weight-bold">ROUTER DAN SERVER</span></h4>
+                        <h4 class="m-0"><i class="fas fa-server"></i> <span class="font-weight-bold">ROUTER</span></h4>
                     </div>
                 </div>
             </div>
@@ -29,6 +29,10 @@
                                         <input type="text" class="form-control" id="nama" name="name" required />
                                     </div>
                                     <div class="form-group">
+                                        <label for="port" class="text-muted font-weight-normal">COA Port</label>
+                                        <input type="text" class="form-control" id="port" name="coa" required />
+                                    </div>
+                                    <div class="form-group">
                                         <label for="secret" class="text-muted font-weight-normal">Secret radius</label>
                                         <input type="text" class="form-control" id="secret" name="secret" required />
                                     </div>
@@ -42,34 +46,35 @@
                         <div class="card  card-primary card-outline h-100">
                             <div class="card-header">DATA ROUTER</div>
                             <div class="card-body">
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-primary mr-2 mb-3 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i> MENU</button>
-                                    <div class="dropdown-menu fade-up">
-                                        <a class="dropdown-item" href="#">SET AKTIF</a>
-                                        <a class="dropdown-item" href="#">SET NONAKTIF</a>
-                                    </div>
-                                </div>
                                 <table id="example" class="table border-dark nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>NAMA ROUTER</th>
                                             <th>IP ADDRESS</th>
                                             <th>SECRET</th>
+                                            <th class="text-center">PORT</th>
                                             <th class="text-center">ONLINE</th>
-                                            <th class="text-center">MONITORING</th>
                                             <th class="text-center">OPTIONS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($routers as $router)
+                                            @php
+                                                $count = 0;
+                                                foreach ($actives as $active) {
+                                                    if ($router->nasname == $active->nasipaddress) {
+                                                        $count++;
+                                                    }
+                                                }
+                                            @endphp
                                             <tr>
                                                 <td class="align-middle">{{ $router->shortname }}</td>
                                                 <td class="align-middle">{{ $router->nasname }}</td>
                                                 <td class="align-middle">{{ $router->secret }}</td>
+                                                <td class="text-center align-middle">{{ $router->ports }}</td>
                                                 <td class="text-center align-middle">
-                                                    <h4 class="m-0 text-danger font-weight-bold">0</h4>
+                                                    <h4 class="m-0 text-danger font-weight-bold">{{ $count }}</h4>
                                                 </td>
-                                                <td class="text-center align-middle"><a href="" class="btn btn-info btn-sm"><i class="fas fa-folder-open"></i> Open</a></td>
                                                 <td class="text-center align-middle"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-cog"></i></button></td>
                                             </tr>
                                         @endforeach

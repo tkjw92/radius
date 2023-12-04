@@ -19,9 +19,12 @@ class DashboardController extends Controller
     // router & server view
     public function router()
     {
+        $actives = DB::table('radacct')->where('acctstoptime', null)->get();
+
         return view('dashboard.router', [
             'title' => 'Router & server - websitename.com',
-            'routers' => NASModel::all()
+            'routers' => NASModel::all(),
+            'actives' => $actives
         ]);
     }
 

@@ -51,6 +51,12 @@ class UserController extends Controller
     {
         DB::table('radcheck')->where('username', $request->name)->delete();
 
+        $active = DB::table('radacct')->where('username', $request->name)->where('acctstoptime', null)->get();
+        if ($active->count() > 0) {
+            $nas = DB::table('nas')->where('nasname', $active[0]->nasipaddress)->first();
+            exec("echo user-name=$request->name | radclient -r 1 $nas->nasname disconnect $nas->secret");
+        }
+
         return redirect('/pppoe/user');
     }
 
@@ -75,6 +81,12 @@ class UserController extends Controller
         DB::table('radcheck')->where('username', $request->oldname)->update([
             'username' => $request->username
         ]);
+
+        $active = DB::table('radacct')->where('username', $request->oldname)->where('acctstoptime', null)->get();
+        if ($active->count() > 0) {
+            $nas = DB::table('nas')->where('nasname', $active[0]->nasipaddress)->first();
+            exec("echo user-name=$request->oldname | radclient -r 1 $nas->nasname disconnect $nas->secret");
+        }
 
         return redirect('/pppoe/user');
     }

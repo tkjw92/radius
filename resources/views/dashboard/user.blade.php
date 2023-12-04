@@ -43,16 +43,16 @@
                                                 <td>{{ $user[3] }}</td>
                                                 <td>{{ $user[4] }}</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal-{{ str_replace('@', '-', $user[0]) }}"><i class="fas fa-pen"></i></button>
-                                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal-{{ str_replace('@', '-', $user[0]) }}"><i class="fas fa-trash"></i></button>
+                                                    <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal-{{ str_replace(['@', '.'], '-', $user[0]) }}"><i class="fas fa-pen"></i></button>
+                                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal-{{ str_replace(['@', '.'], '-', $user[0]) }}"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
 
-                                            <div class="modal fade" id="deleteModal-{{ str_replace('@', '-', $user[0]) }}" tabindex="-1" aria-labelledby="deleteModal-{{ str_replace('@', '-', $user[0]) }}Label" aria-hidden="true">
+                                            <div class="modal fade" id="deleteModal-{{ str_replace(['@', '.'], '-', $user[0]) }}" tabindex="-1" aria-labelledby="deleteModal-{{ str_replace(['@', '.'], '-', $user[0]) }}Label" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteModal-{{ str_replace('@', '-', $user[0]) }}Label">DELETE USER</h5>
+                                                            <h5 class="modal-title" id="deleteModal-{{ str_replace(['@', '.'], '-', $user[0]) }}Label">DELETE USER</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -72,11 +72,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="modal fade" id="editModal-{{ str_replace('@', '-', $user[0]) }}" tabindex="-1" aria-labelledby="editModal-{{ str_replace('@', '-', $user[0]) }}Label" aria-hidden="true">
+                                            <div class="modal fade" id="editModal-{{ str_replace(['@', '.'], '-', $user[0]) }}" tabindex="-1" aria-labelledby="editModal-{{ str_replace(['@', '.'], '-', $user[0]) }}Label" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="editModal-{{ str_replace('@', '-', $user[0]) }}Label">EDIT USER</h5>
+                                                            <h5 class="modal-title" id="editModal-{{ str_replace(['@', '.'], '-', $user[0]) }}Label">EDIT USER</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

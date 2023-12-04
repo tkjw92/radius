@@ -44,7 +44,8 @@ class VPNController extends Controller
         NASModel::insert([
             'nasname' => $addr,
             'shortname' => str_replace(' ', '_', $request->name),
-            'secret' => $request->secret
+            'secret' => $request->secret,
+            'ports' => $request->coa
         ]);
 
         return redirect('/router');
