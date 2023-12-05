@@ -64,6 +64,7 @@ class VPNController extends Controller
         }
 
         exec("rm -f /etc/openvpn/ccd/$data->shortname");
+        exec("sudo systemctl restart openvpn");
 
         VPNModel::where('address', $data->nasname)->delete();
         $data->delete();
