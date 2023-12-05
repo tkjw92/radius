@@ -7,6 +7,8 @@ use App\Models\VPNModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\error;
+
 class VPNController extends Controller
 {
     public function randomAddr()
@@ -64,10 +66,34 @@ class VPNController extends Controller
         }
 
         exec("rm -f /etc/openvpn/ccd/$data->shortname");
-        exec("sudo systemctl restart openvpn");
+        exec("sudo systemctl restart openvpn@server");
 
         VPNModel::where('address', $data->nasname)->delete();
         $data->delete();
         return redirect('/router');
+    }
+
+    public function script($version, $id)
+    {
+        if ($version == 'v6' || $version == 'v7') {
+            $data = NASModel::where('id', $id);
+            if ($data->count() > 0) {
+                $data = $data->first();
+                $vpn = VPNModel::where('user_id', $data->shortname)->first();
+                if ($version == 'v6') {
+                    echo '/interface ovpn-client add name=AltaFocusRadius connect-to=103.193.147.153 port=443 protocol=tcp user=' . $vpn->user_id . ' password=' . $vpn->user_pass;
+                    echo '/ip pool add name=expired-pool ranges=172.16.50.1-172.16.50.254';
+                    echo '/radius incoming set port=' . $data->ports;
+                } else {
+                    echo '/interface/ovpn-client/add name=AltaFocusRadius connect-to=103.193.147.153 port=443 protocol=tcp user=' . $vpn->user_id . ' password=' . $vpn->user_pass;
+                    echo '/ip/pool/add name=expired-pool ranges=172.16.50.1-172.16.50.254';
+                    echo '/radius/incoming set port=' . $data->ports;
+                }
+            } else {
+                return abort(404, 'NOT FOUND');
+            }
+        } else {
+            return abort(404, 'NOT FOUND');
+        }
     }
 }

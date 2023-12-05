@@ -18,17 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// // DASHBOARD
-// Route::controller(DashboardController::class)->group(function () {
-//     Route::get('/dashboard', 'dashboard');
-//     Route::get('/router', 'router');
-//     Route::get('/langganan', 'langganan');
-// });
-
 Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 Route::get('/router', [DashboardController::class, 'router']);
 Route::get('/pppoe/profile', [DashboardController::class, 'profile']);
 Route::get('/pppoe/user', [DashboardController::class, 'user']);
+Route::get('/router/script/{version}/{id}', [VPNController::class, 'script']);
 
 Route::post('/router/add', [VPNController::class, 'add']);
 Route::post('/pppoe/profile/add', [ProfileController::class, 'add']);
@@ -39,8 +33,3 @@ Route::post('/pppoe/profile/update', [ProfileController::class, 'update']);
 Route::post('/pppoe/user/update', [UserController::class, 'update']);
 
 Route::post('/router/delete', [VPNController::class, 'delete']);
-
-Route::get('/debug', function () {
-    $test = VPNModel::get(['user_id', 'address'])->count();
-    dd($test);
-});
