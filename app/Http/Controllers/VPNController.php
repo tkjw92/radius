@@ -63,6 +63,8 @@ class VPNController extends Controller
             }
         }
 
+        exec("rm -f /etc/openvpn/ccd/$data->shortname");
+
         VPNModel::where('address', $data->nasname)->delete();
         $data->delete();
         return redirect('/router');

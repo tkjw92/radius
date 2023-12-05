@@ -110,16 +110,18 @@
                                                                     <a target="_blank" href="/router/script/v7/{{ $router->id }}" class="btn btn-info">Copy <i class="far fa-clipboard"></i></a>
                                                                 </div>
                                                                 <div class="tab-pane fade" id="more-{{ str_replace('_', '-', $router->shortname) }}" role="tabpanel">
-                                                                    <form action="/router/delete" method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="id" value="{{ $router->id }}">
-                                                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                                                    </form>
-                                                                    <form action="/router/disable" method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="id" value="{{ $router->id }}">
-                                                                        <button type="submit" class="btn btn-secondary">DISABLE</button>
-                                                                    </form>
+                                                                    <div class="d-flex pt-5 pr-5 pb-5">
+                                                                        <form action="/router/delete" method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="id" value="{{ $router->id }}">
+                                                                            <button type="submit" class="btn btn-danger">DELETE</button>
+                                                                        </form>
+                                                                        <form action="/router/disable" method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="id" value="{{ $router->id }}">
+                                                                            <button type="submit" class="btn btn-secondary">DISABLE</button>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
