@@ -59,6 +59,9 @@ class VPNController extends Controller
         $data = NASModel::where('id', $request->id)->first();
         $active = DB::table('radacct')->where('acctstoptime', null)->where('nasipaddress', $data->nasname)->get();
 
+        VPNModel::where('address', $data->nasname)->delete();
+        $data->delete();
+
         if ($active->count() > 0) {
             foreach ($active as $x) {
                 exec("echo user-name=$x->username | radclient -r 1 $x->nasipaddress disconnect $data->secret");
@@ -68,8 +71,6 @@ class VPNController extends Controller
         exec("rm -f /etc/openvpn/ccd/$data->shortname");
         exec("sudo systemctl restart openvpn@server");
 
-        VPNModel::where('address', $data->nasname)->delete();
-        $data->delete();
         return redirect('/router');
     }
 
@@ -82,11 +83,15 @@ class VPNController extends Controller
                 $vpn = VPNModel::where('user_id', $data->shortname)->first();
                 if ($version == 'v6') {
                     echo '/interface ovpn-client add name=AltaFocusRadius connect-to=103.193.147.153 port=443 protocol=tcp user=' . $vpn->user_id . ' password=' . $vpn->user_pass;
+                    echo '<br>';
                     echo '/ip pool add name=expired-pool ranges=172.16.50.1-172.16.50.254';
+                    echo '<br>';
                     echo '/radius incoming set port=' . $data->ports;
                 } else {
                     echo '/interface/ovpn-client/add name=AltaFocusRadius connect-to=103.193.147.153 port=443 protocol=tcp user=' . $vpn->user_id . ' password=' . $vpn->user_pass;
+                    echo '<br>';
                     echo '/ip/pool/add name=expired-pool ranges=172.16.50.1-172.16.50.254';
+                    echo '<br>';
                     echo '/radius/incoming set port=' . $data->ports;
                 }
             } else {
@@ -95,5 +100,24 @@ class VPNController extends Controller
         } else {
             return abort(404, 'NOT FOUND');
         }
+    }
+
+    public function disable(Request $request)
+    {
+        $data = NASModel::where('id', $request->id)->first();
+        VPNModel::where('user_id', $data->shortname)->update([
+            'user_enable' => '0'
+        ]);
+
+        $active = DB::table('radacct')->where('acctstoptime', null)->where('nasipaddress', $data->nasname)->get();
+
+        if ($active->count() > 0) {
+            foreach ($active as $x) {
+                exec("echo user-name=$x->username | radclient -r 1 $x->nasipaddress disconnect $data->secret");
+            }
+        }
+        exec("sudo systemctl restart openvpn@server");
+
+        return redirect('/router');
     }
 }
