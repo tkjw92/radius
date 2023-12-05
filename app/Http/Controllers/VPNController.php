@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NASModel;
 use App\Models\VPNModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VPNController extends Controller
 {
@@ -48,6 +49,22 @@ class VPNController extends Controller
             'ports' => $request->coa
         ]);
 
+        return redirect('/router');
+    }
+
+    public function delete(Request $request)
+    {
+        $data = NASModel::where('id', $request->id)->first();
+        $active = DB::table('radacct')->where('acctstoptime', null)->where('nasipaddress', $data->nasname)->get();
+
+        if ($active->count() > 0) {
+            foreach ($active as $x) {
+                exec("echo user-name=$x->username | radclient -r 1 $x->nasipaddress disconnect $data->secret");
+            }
+        }
+
+        VPNModel::where('address', $data->nasname)->delete();
+        $data->delete();
         return redirect('/router');
     }
 }

@@ -38,6 +38,8 @@ Route::post('/pppoe/user/delete', [UserController::class, 'delete']);
 Route::post('/pppoe/profile/update', [ProfileController::class, 'update']);
 Route::post('/pppoe/user/update', [UserController::class, 'update']);
 
+Route::post('/router/delete', [VPNController::class, 'delete']);
+
 Route::get('/debug', function () {
     $test = VPNModel::get(['user_id', 'address'])->count();
     dd($test);

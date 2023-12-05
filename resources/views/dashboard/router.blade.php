@@ -75,34 +75,64 @@
                                                 <td class="text-center align-middle">
                                                     <h4 class="m-0 text-danger font-weight-bold">{{ $count }}</h4>
                                                 </td>
-                                                <td class="text-center align-middle"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-cog"></i></button></td>
+                                                <td class="text-center align-middle"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#{{ $router->shortname }}"><i class="fas fa-cog"></i></button></td>
                                             </tr>
+
+                                            <div class="modal fade" id="{{ $router->shortname }}" tabindex="-1" aria-labelledby="{{ $router->shortname }}Label" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="{{ $router->shortname }}Label">{{ $router->shortname }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                                <li class="nav-item" role="presentation">
+                                                                    <button class="nav-link active" data-toggle="tab" data-target="#ros6-{{ str_replace('_', '-', $router->shortname) }}" type="button" role="tab">ROS V6</button>
+                                                                </li>
+                                                                <li class="nav-item" role="presentation">
+                                                                    <button class="nav-link" data-toggle="tab" data-target="#ros7-{{ str_replace('_', '-', $router->shortname) }}" type="button" role="tab">ROS V7</button>
+                                                                </li>
+                                                                <li class="nav-item" role="presentation">
+                                                                    <button class="nav-link" data-toggle="tab" data-target="#more-{{ str_replace('_', '-', $router->shortname) }}" type="button" role="tab">MORE</button>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="tab-content" id="myTabContent">
+                                                                <div class="tab-pane fade show active" id="ros6-{{ str_replace('_', '-', $router->shortname) }}" role="tabpanel">
+                                                                    <p class="mt-2">Copy configuration script</p>
+                                                                    <a target="_blank" href="/router/script/v6/{{ $router->id }}" class="btn btn-info">Copy <i class="far fa-clipboard"></i></a>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="ros7-{{ str_replace('_', '-', $router->shortname) }}" role="tabpanel">
+                                                                    <p class="mt-2">Copy configuration script</p>
+                                                                    <a target="_blank" href="/router/script/v7/{{ $router->id }}" class="btn btn-info">Copy <i class="far fa-clipboard"></i></a>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="more-{{ str_replace('_', '-', $router->shortname) }}" role="tabpanel">
+                                                                    <form action="/router/delete" method="post">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id" value="{{ $router->id }}">
+                                                                        <button type="submit" class="btn btn-danger">DELETE</button>
+                                                                    </form>
+                                                                    <form action="/router/disable" method="post">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id" value="{{ $router->id }}">
+                                                                        <button type="submit" class="btn btn-secondary">DISABLE</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- modal --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
