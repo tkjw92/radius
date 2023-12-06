@@ -120,4 +120,14 @@ class VPNController extends Controller
 
         return redirect('/router');
     }
+
+    public function enable(Request $request)
+    {
+        $data = NASModel::where('id', $request->id)->first();
+        VPNModel::where('user_id', $data->shortname)->update([
+            'user_enable' => '1'
+        ]);
+
+        return redirect('/router');
+    }
 }

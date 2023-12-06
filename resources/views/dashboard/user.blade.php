@@ -26,6 +26,7 @@
                                 <table id="example" class="table border-dark nowrap" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>USERNAME</th>
                                             <th>PASSWORD</th>
                                             <th>PROFILE</th>
@@ -37,6 +38,7 @@
                                     <tbody>
                                         @foreach ($users as $user)
                                             <tr>
+                                                <td><i class="fas fa-circle text-{{ $actives->where('username', $user[0])->count() > 0 ? 'success' : 'danger' }}"></i></td>
                                                 <td>{{ $user[0] }}</td>
                                                 <td>{{ $user[1] }}</td>
                                                 <td>{{ $user[2] }}</td>

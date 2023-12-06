@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NASModel;
+use App\Models\VPNModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,11 +21,13 @@ class DashboardController extends Controller
     public function router()
     {
         $actives = DB::table('radacct')->where('acctstoptime', null)->get();
+        $vpn = VPNModel::get();
 
         return view('dashboard.router', [
             'title' => 'Router & server - websitename.com',
             'routers' => NASModel::all(),
-            'actives' => $actives
+            'actives' => $actives,
+            'vpn' => $vpn
         ]);
     }
 
@@ -60,6 +63,7 @@ class DashboardController extends Controller
     {
         $data = DB::table('radcheck')->get();
         $profiles = DB::table('radusergroup')->get();
+        $actives = DB::table('radacct')->where('acctstoptime', 'null')->get();
         $username = [];
         $users = [];
 
@@ -84,7 +88,8 @@ class DashboardController extends Controller
         return view('dashboard.user', [
             'title' => 'User PPPOE',
             'users' => $users,
-            'profiles' => $profiles
+            'profiles' => $profiles,
+            'actives' => $actives
         ]);
     }
 }

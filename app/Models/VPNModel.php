@@ -10,4 +10,5 @@ class VPNModel extends Model
     use HasFactory;
     protected $table = 'user';
     protected $guard = [];
+    public $timestamps = false;
 }

@@ -66,8 +66,11 @@
                                                         $count++;
                                                     }
                                                 }
+
+                                                $status = $vpn->where('address', $router->nasname)->first()->user_enable == 0 ? 'disabled' : 'enabled';
+
                                             @endphp
-                                            <tr>
+                                            <tr class="{{ $status == 'disabled' ? 'bg-danger' : '' }}">
                                                 <td class="align-middle">{{ $router->shortname }}</td>
                                                 <td class="align-middle">{{ $router->nasname }}</td>
                                                 <td class="align-middle">{{ $router->secret }}</td>
@@ -116,10 +119,10 @@
                                                                             <input type="hidden" name="id" value="{{ $router->id }}">
                                                                             <button type="submit" class="btn btn-danger">DELETE</button>
                                                                         </form>
-                                                                        <form action="/router/disable" method="post">
+                                                                        <form action="/router/{{ $status == 'disabled' ? 'enable' : 'disable' }}" method="post">
                                                                             @csrf
                                                                             <input type="hidden" name="id" value="{{ $router->id }}">
-                                                                            <button type="submit" class="btn btn-secondary">DISABLE</button>
+                                                                            <button type="submit" class="btn btn-{{ $status == 'disabled' ? 'success' : 'secondary' }}">{{ $status == 'disabled' ? 'ENABLE' : 'DISABLE' }}</button>
                                                                         </form>
                                                                     </div>
                                                                 </div>

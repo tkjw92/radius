@@ -34,3 +34,4 @@ Route::post('/pppoe/user/update', [UserController::class, 'update']);
 
 Route::post('/router/delete', [VPNController::class, 'delete']);
 Route::post('/router/disable', [VPNController::class, 'disable']);
+Route::post('/router/enable', [VPNController::class, 'enable']);
