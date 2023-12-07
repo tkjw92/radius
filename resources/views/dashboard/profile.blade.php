@@ -23,7 +23,7 @@
                                     <button type="button" class="btn btn-success mr-2 mb-3" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i> BUAT PROFILE</button>
                                 </div>
 
-                                <table id="example" class="table border-dark nowrap" style="width:100%">
+                                <table id="profileTable" class="table border-dark nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>NAMA PROFILE</th>
@@ -58,8 +58,8 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h1>Yakin ingin menghapus profile ini ?</h1>
-                                                            <h3>Data yang telah dihapus tidak dapat dikembalikan lagi!!!</h3>
+                                                            <h4 class="text-danger font-weight-bold">YAKIN INGIN HAPUS PROFILE INI ?</h4>
+                                                            <h5 class="text-monospace">Data yang telah dihapus tidak dapat dikembalikan lagi!!!</h5>
                                                         </div>
                                                         <form action="/pppoe/profile/delete" method="post">
                                                             @csrf
@@ -163,7 +163,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
     <script>
-        $('#example').DataTable({
+        $('#profileTable').DataTable({
             responsive: true,
             ordering: false,
         });

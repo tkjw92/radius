@@ -46,7 +46,7 @@
                         <div class="card  card-primary card-outline h-100">
                             <div class="card-header">DATA ROUTER</div>
                             <div class="card-body">
-                                <table id="example" class="table border-dark nowrap" style="width:100%">
+                                <table id="routerTable" class="table border-dark nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>NAMA ROUTER</th>
@@ -150,7 +150,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
     <script>
-        $('#example').DataTable({
+        $('#routerTable').DataTable({
             // responsive: true,
             ordering: false,
             scrollX: true

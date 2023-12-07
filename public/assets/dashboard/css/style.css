@@ -230,6 +230,18 @@
 .dark-mode .modal-footer {
     border-color: #2b364e !important;
 }
+
+.dark-mode input:-webkit-autofill,
+.dark-mode input:-webkit-autofill:hover,
+.dark-mode input:-webkit-autofill:focus,
+.dark-mode textarea:-webkit-autofill,
+.dark-mode textarea:-webkit-autofill:hover,
+.dark-mode textarea:-webkit-autofill:focus,
+.dark-mode select:-webkit-autofill,
+.dark-mode select:-webkit-autofill:hover,
+.dark-mode select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #0e101b !important;
+}
 @media screen and (max-width: 586px) {
     .push1 {
         display: block !important;
