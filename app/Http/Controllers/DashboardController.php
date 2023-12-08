@@ -13,21 +13,23 @@ class DashboardController extends Controller
     public function dashboard()
     {
         return view('dashboard.dashboard', [
-            'title' => 'Home - websitename.com'
+            'title' => 'Home - websitename.com',
         ]);
     }
 
     // router & server view
     public function router()
     {
-        $actives = DB::table('radacct')->where('acctstoptime', null)->get();
+        $actives = DB::table('radacct')
+            ->where('acctstoptime', null)
+            ->get();
         $vpn = VPNModel::get();
 
         return view('dashboard.router', [
             'title' => 'Router & server - websitename.com',
             'routers' => NASModel::all(),
             'actives' => $actives,
-            'vpn' => $vpn
+            'vpn' => $vpn,
         ]);
     }
 
@@ -47,15 +49,27 @@ class DashboardController extends Controller
         foreach ($name as $x) {
             $y = [];
             array_push($y, $x);
-            array_push($y, $data->where('attribute', 'Framed-Pool')->where('groupname', $x)->first()->value);
-            array_push($y, $data->where('attribute', 'Mikrotik-Rate-Limit')->where('groupname', $x)->first()->value);
+            array_push(
+                $y,
+                $data
+                    ->where('attribute', 'Framed-Pool')
+                    ->where('groupname', $x)
+                    ->first()->value,
+            );
+            array_push(
+                $y,
+                $data
+                    ->where('attribute', 'Mikrotik-Rate-Limit')
+                    ->where('groupname', $x)
+                    ->first()->value,
+            );
 
             array_push($profiles, $y);
         }
 
         return view('dashboard.profile', [
             'title' => 'Langganan - websitename.com',
-            'profiles' => $profiles
+            'profiles' => $profiles,
         ]);
     }
 
@@ -63,7 +77,7 @@ class DashboardController extends Controller
     {
         $data = DB::table('radcheck')->get();
         $profiles = DB::table('radusergroup')->get();
-        $actives = DB::table('radacct')->where('acctstoptime', 'null')->get();
+        $actives = DB::table('radacct')->where('acctstoptime', null);
         $username = [];
         $users = [];
 
@@ -77,10 +91,34 @@ class DashboardController extends Controller
             $y = [];
 
             array_push($y, $x);
-            array_push($y, $data->where('username', $x)->where('attribute', 'Cleartext-Password')->first()->value);
-            array_push($y, $data->where('username', $x)->where('attribute', 'User-Profile')->first()->value);
-            array_push($y, $data->where('username', $x)->where('attribute', 'Called-Station-Id')->first()->value);
-            array_push($y, $data->where('username', $x)->where('attribute', 'Expiration')->first()->value);
+            array_push(
+                $y,
+                $data
+                    ->where('username', $x)
+                    ->where('attribute', 'Cleartext-Password')
+                    ->first()->value,
+            );
+            array_push(
+                $y,
+                $data
+                    ->where('username', $x)
+                    ->where('attribute', 'User-Profile')
+                    ->first()->value,
+            );
+            array_push(
+                $y,
+                $data
+                    ->where('username', $x)
+                    ->where('attribute', 'Called-Station-Id')
+                    ->first()->value,
+            );
+            array_push(
+                $y,
+                $data
+                    ->where('username', $x)
+                    ->where('attribute', 'Expiration')
+                    ->first()->value,
+            );
 
             array_push($users, $y);
         }
@@ -89,7 +127,7 @@ class DashboardController extends Controller
             'title' => 'User PPPOE',
             'users' => $users,
             'profiles' => $profiles,
-            'actives' => $actives
+            'actives' => $actives,
         ]);
     }
 }
